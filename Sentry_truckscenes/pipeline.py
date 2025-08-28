@@ -129,7 +129,8 @@ class MyTruckScenesExplorer(TruckScenesExplorer):
         mask = np.logical_and(mask, points[1, :] > 1)
         mask = np.logical_and(mask, points[1, :] < im.size[1] - 1)
         points = points[:, mask]
-        coloring = coloring[mask, :]
+        #coloring = coloring[mask, :]
+        coloring = np.tile(np.array([[1.0, 0.0, 0.0]]), (points.shape[1], 1))  # RGB for red
 
         return points, coloring, im
     
@@ -172,7 +173,7 @@ def project_radar_pcd_to_img(trucksc, radar_name, camera_name, output_folder):
 #project_radar_pcd_to_img(trucksc, radar_name="RADAR_RIGHT_FRONT", camera_name="CAMERA_RIGHT_FRONT", output_folder="output2")
 
 my_sample=trucksc.sample[10]
-trucksc.render_pointcloud_in_image(my_sample['token'], pointsensor_channel='RADAR_LEFT_FRONT', render_intensity=False, dot_size=2)
+trucksc.render_pointcloud_in_image(my_sample['token'], pointsensor_channel='RADAR_LEFT_FRONT', render_intensity=True, dot_size=2)
 plt.savefig("radar_point_cloud_custom.png")
 
 
